@@ -15,4 +15,4 @@ res.status(201).json("User created successfully!!!")
    // next(errorHandeler(550, 'error from the function'));
    next(error);
 }
-};
+};  
