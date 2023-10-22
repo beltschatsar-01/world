@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -31,6 +32,8 @@ const SignUp = () => {
       }
 
       setError(null);
+      navigate('/sign-in')
+      
     } catch (error) {
       setError('An error occurred during sign up. Please try again.');
     } finally {
