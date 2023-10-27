@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import {errorHandler} from '../utiles/error.js'
 
 // Function to hash passwords
 const hashPassword = (password) => bcryptjs.hashSync(password, 10);
@@ -17,7 +18,7 @@ export const signup = async (req, res, next) => {
     await newUser.save();
     res.status(201).json("User created successfully!!!");
   } catch (error) {
-    next(error);
+    next (errorHandler(550, 'erro from the function'));
   }
 };
 
@@ -89,39 +90,3 @@ export const google = async (req, res, next) => {
 
 
 
-
-
-
-/*import User from "../models/user.model.js";
-import bcryptjs from 'bcryptjs';
-import { errorHandeler } from "../utiles/error.js";
-import jwt from jsontoken
-
-export const signup = async (req,res,next) => {
-const {username, email, password, } = req.body;
-const hashedPassword = bcryptjs.hashSync(password,10);
-const newUser = new User({username,email, password: hashedPassword});
-
-try {
-    await newUser.save();
-res.status(201).json("User created successfully!!!")
-
-} catch (error) {
-   // next(errorHandeler(550, 'error from the function'));
-   next(error);
-}
-};  
-
-export const signin = async (req,res,next) => {
-    const {email,password} = req.body;
-    try{
-        const validUser = await User.findOne({email});
-        if (!validUser) return next (errorHandeler(404,'User not found'));
-        const validPassword = bcryptjs.compareSync(password,validUser.password);
-        if (!validPassword) return next(errorHandeler(401,'you have entered an incorrect email or password'));
-        const token =jwt.sign({id:validUser._id},process.env.JWT_SECRET)
-        res.cookie('access_token',token,{httpOnly:true,expires:new Date(Date.now()+24 * 60 * 60 * 1000)});
-    }catch(error){
-        next(error);
-    }
-};*/
