@@ -99,6 +99,13 @@ const handleSubmit = async (e) => {
     dispatch(updateUserFailure(error.message));
   }
 };
+  const handleDeleteUser = async () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className='p-3 max-w-lg mx-auto'>
     <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -160,9 +167,12 @@ const handleSubmit = async (e) => {
         </button>
        </form>
        <div className="flex justify-between mt-3">
-          <span className='text-red-700 cursor-pointer'>
-            Delete Account
-          </span>
+       <span
+          onClick={handleDeleteUser}
+          className='text-red-700 cursor-pointer'
+        >
+          Delete account
+        </span>
           <span className='text-red-700 cursor-pointer'>
             Sign Out
           </span>
