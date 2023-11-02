@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import {errorHandler} from './error.js'
 
 //import { errorHandler } from "./error";
 
