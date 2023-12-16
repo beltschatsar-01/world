@@ -1,24 +1,17 @@
-import User from "../models/user.model.js";
+import User from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
+import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
-import {errorHandler} from '../utiles/error.js'
-
-// Function to hash passwords
-const hashPassword = (password) => bcryptjs.hashSync(password, 10);
-
-// Function to generate JWT token
-const generateToken = (userId, expiresIn) => jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn });
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
-  const hashedPassword = hashPassword(password);
-
+  const hashedPassword = bcryptjs.hashSync(password, 10);
+  const newUser = new User({ username, email, password: hashedPassword });
   try {
-    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
-    res.status(201).json("User created successfully!!!");
+    res.status(201).json('User created successfully!');
   } catch (error) {
-    next (errorHandler(550, 'erro from the function'));
+    next(error);
   }
 };
 
@@ -39,7 +32,6 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const google = async (req, res, next) => {
   try {
@@ -77,7 +69,6 @@ export const google = async (req, res, next) => {
   }
 };
 
-
 export const signOut = async (req, res, next) => {
   try {
     res.clearCookie('access_token');
@@ -85,4 +76,4 @@ export const signOut = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
